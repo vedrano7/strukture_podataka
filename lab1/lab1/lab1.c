@@ -11,6 +11,22 @@ typedef struct {
 	double bodovi;
 } student;
 
+
+
+int readNoRows();
+
+
+int main() {
+
+	int brred;
+
+	brred = readNoRows();
+
+	printf("%d", brred);
+
+	return 0;
+}
+
 int readNoRows() {
 	int counter = 0;
 	FILE* datoteka = NULL;
@@ -33,17 +49,3 @@ int readNoRows() {
 
 	return counter;
 };
-
-
-
-
-int main() {
-
-	int brred;
-
-	brred = readNoRows;
-
-	printf("%d", readNoRows);
-
-	return 0;
-}
