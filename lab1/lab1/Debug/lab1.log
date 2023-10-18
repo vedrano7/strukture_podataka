@@ -1,4 +1,0 @@
-﻿  lab1.c
-c:\users\student\desktop\vedran delic zvonimir damjanovic strukture\strukture_podataka\lab1\lab1\lab1.c(44): warning C4047: '=': 'int' differs in levels of indirection from 'int (__cdecl *)()'
-c:\users\student\desktop\vedran delic zvonimir damjanovic strukture\strukture_podataka\lab1\lab1\lab1.c(46): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'int (__cdecl *)()'
-  lab1.vcxproj -> C:\Users\student\Desktop\vedran delic zvonimir damjanovic strukture\strukture_podataka\lab1\Debug\lab1.exe
