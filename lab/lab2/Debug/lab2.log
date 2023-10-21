@@ -1,0 +1,7 @@
+﻿  lab2.c
+C:\Users\Vedran\Desktop\strukture_podataka git repo\strukture_podataka\lab\lab2\lab2.c(69,14): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'position'
+C:\Users\Vedran\Desktop\strukture_podataka git repo\strukture_podataka\lab\lab2\lab2.c(69,14): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'char *'
+C:\Users\Vedran\Desktop\strukture_podataka git repo\strukture_podataka\lab\lab2\lab2.c(104,28): warning C4013: 'malloc' undefined; assuming extern returning int
+C:\Users\Vedran\Desktop\strukture_podataka git repo\strukture_podataka\lab\lab2\lab2.c(178,8): warning C4778: 'scanf' : unterminated format string '%'
+C:\Users\Vedran\Desktop\strukture_podataka git repo\strukture_podataka\lab\lab2\lab2.c(197,6): warning C4013: 'free' undefined; assuming extern returning int
+  lab2.vcxproj -> C:\Users\Vedran\Desktop\strukture_podataka git repo\strukture_podataka\lab\lab2\Debug\lab2.exe
