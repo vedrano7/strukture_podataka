@@ -98,7 +98,6 @@ int menu(position head) {
 }
 
 int addPersonToBegg(position P){
-	int x = 0;
 	position newPerson=NULL;
 
 	newPerson =(Person*)malloc(sizeof(Person));
@@ -134,7 +133,7 @@ int printList(position P) {
 }
 
 int addPersonToEnd(position P) {
-	int x = 0;
+
 	position newPerson=NULL;
 
 	newPerson =(Person*)malloc(sizeof(Person));
