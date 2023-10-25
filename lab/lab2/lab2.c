@@ -6,6 +6,14 @@ D.pronalazi element u listi(po prezimenu),
 E.briše određeni element iz liste,
 U zadatku se ne smiju koristiti globalne varijable.*/
 
+/*3. Prethodnom zadatku dodati funkcije:
+A. dinamički dodaje novi element iza određenog elementa,
+B. dinamički dodaje novi element ispred određenog elementa,
+C. sortira listu po prezimenima osoba,
+D. upisuje listu u datoteku,
+E. čita listu iz datoteke.*/
+
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
@@ -28,6 +36,7 @@ int printList(position P);
 int addPersonToEnd(position P);
 position findPerson(position P);
 position del(position P);
+position insertAfterPerson(position p);
 
 int main() {
 	Person head = { {0},{0},0,NULL};
