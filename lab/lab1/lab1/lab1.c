@@ -28,21 +28,26 @@ int readStudentsFromFile(student* base);
 
 int printStudentsFromFile(student* base, int brred);
 
-
 int main() {
-	int noRows;
-	student* base;
+	int noRows=0;
+	student* base=NULL;
 
 
 	noRows = readNoRows();
 
 	base = malloc(sizeof(student) * noRows);
 
+	if(!base){
+		printf("\nNeuspjela alokacija memorije za base\n");
+		exit -1;
+	}
+	
 	readStudentsFromFile(base);
 
 	printStudentsFromFile(base, noRows);
 
-
+	free(base);
+		
 	return 0;
 }
 
@@ -87,8 +92,8 @@ int readStudentsFromFile(student* base) {
 }
 
 int printStudentsFromFile(student* base, int noRows) {
-	double relPoints;
-	int i;
+	double relPoints=0;
+	int i=0;
 
 	for (i = 0; i < noRows; i++) {
 		relPoints = ((double)base[i].points / MAXNOPOINTS) * 100;
