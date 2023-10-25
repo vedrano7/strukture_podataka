@@ -39,7 +39,7 @@ int main() {
 
 	if(!base){
 		printf("\nNeuspjela alokacija memorije za base\n");
-		exit -1;
+		exit (-1);
 	}
 	
 	readStudentsFromFile(base);
