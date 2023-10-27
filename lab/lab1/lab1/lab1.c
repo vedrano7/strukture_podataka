@@ -59,7 +59,7 @@ int readNoRows() {
 	studentsFile = fopen("students.txt", "r");
 
 	if (!studentsFile) {
-		printf("File not open");
+		printf("\nFile studentsFile unsuccesfully opened!\n");
 		return -1;
 	}
 
@@ -80,6 +80,12 @@ int readStudentsFromFile(student* base) {
 	int i = 0;
 
 	studentsFile = fopen("students.txt", "r");
+
+	if (!studentsFile) {
+		printf("\nFile studentsFile unsuccesfully opened!\n");
+		return -1;
+	}
+
 
 	while (!feof(studentsFile)) {
 		fscanf(studentsFile, "%s %s %d", base[i].name, base[i].surname, &base[i].points);
