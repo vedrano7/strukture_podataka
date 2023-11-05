@@ -85,7 +85,7 @@ int parseStringIntoList(position headPoly, char buffer[MAX_LINE]) {
 	while (strlen(buffer)>0) {
 		status=sscanf(buffer, " %dx^%d %n", &coeff, &exp, &numBytes);
 
-		if (status != 2) {							//zato sto sscanf vraca broj podataka skeniranih, a u ovom slucaju bi to trebalo bit 2
+		if (status != 2) {							//zato sto sscanf vraca broj skeniranih podataka, a u ovom slucaju bi to trebalo bit 2
 			printf("\nThis file is not good!\n");
 			return EXIT_FAILURE;
 		}
