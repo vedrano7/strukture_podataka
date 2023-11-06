@@ -31,7 +31,7 @@ typedef struct person {
 Person;
 
 int menu(position head);
-int addPersonToBegg(position P);
+int addPersonToBeg(position P);
 int printList(position P);
 int addPersonToEnd(position P);
 position findPerson(position P);
@@ -61,7 +61,7 @@ int menu(position head) {
 			
 				case '1':
 
-					addPersonToBegg(head);
+					addPersonToBeg(head);
 
 					break;
 				case '2':
@@ -135,7 +135,7 @@ int menu(position head) {
 	return 0;
 }
 
-int addPersonToBegg(position P){
+int addPersonToBeg(position P){
 	position newPerson=NULL;
 
 	newPerson =(Person*)malloc(sizeof(Person));
