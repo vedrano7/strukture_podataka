@@ -256,13 +256,37 @@ int printPoly(char* polyName,position firstEl) {
 
 	while (current != NULL) {
 
-		if (current->next == NULL) {
-			printf("%dx^%d", current->coeff, current->exp);
+		if (current==firstEl) {
+
+			if(current->exp<0)
+				printf("%dx^(%d)", current->coeff, current->exp);
+		
+			else
+				printf("%dx^%d", current->coeff, current->exp);
+
 			current = current->next;
 		}
 
 		else {
-			printf("%dx^%d + ", current->coeff, current->exp);
+
+			if (current->exp < 0) {
+
+				if (current->coeff > 0)
+					printf("+%dx^(%d)", current->coeff, current->exp);
+
+				else
+					printf("-%dx^(%d)", abs(current->coeff), current->exp);
+			}
+
+			else {
+
+				if(current->coeff > 0)
+					printf("+%dx^%d", current->coeff, current->exp);
+
+				else
+					printf("-%dx^%d", abs(current->coeff), current->exp);
+			}
+
 			current = current->next;
 		}
 	}
