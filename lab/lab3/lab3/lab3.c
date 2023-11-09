@@ -168,7 +168,7 @@ int mergeElements(position prevElementInList, position newElement) {
 }
 
 int polySum(position firstElPoly1, position firstElPoly2, position headPolySum) {
-	position currentPoly1 = firstElPoly1, currentPoly2 = firstElPoly2, newElement = NULL,temp=NULL;
+	/*position currentPoly1 = firstElPoly1, currentPoly2 = firstElPoly2, newElement = NULL,temp=NULL;
 	int coeff = 0, exp = 0;
 
 
@@ -216,6 +216,31 @@ int polySum(position firstElPoly1, position firstElPoly2, position headPolySum) 
 		sortedInput(headPolySum, newElement);
 
 		temp = temp->next;
+	}*/
+
+	//vise programerski nacin za zbrojit polinome
+
+	position currentPoly1 = firstElPoly1, currentPoly2 = firstElPoly2, newElement = NULL;
+	int coeff = 0, exp = 0;
+
+	while (currentPoly1 != NULL) {
+		exp = currentPoly1->exp;
+		coeff = currentPoly1->coeff;
+
+		newElement = createElement(coeff, exp);
+		sortedInput(headPolySum, newElement);
+
+		currentPoly1 = currentPoly1->next;
+	}
+
+	while (currentPoly2 != NULL) {
+		exp = currentPoly2->exp;
+		coeff = currentPoly2->coeff;
+
+		newElement = createElement(coeff, exp);
+		sortedInput(headPolySum, newElement);
+
+		currentPoly2 = currentPoly2->next;
 	}
 
 	return EXIT_SUCCESS;
