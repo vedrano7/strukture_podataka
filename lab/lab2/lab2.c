@@ -63,72 +63,72 @@ int menu(position head) {
 
 					addPersonToBeg(head);
 
-					break;
+					continue;
+
 				case '2':
 
 					printList(head->next);
-					break;
+
+					continue;
 
 				case '3':
 
 					addPersonToEnd(head);
 
-					break;
+					continue;
+
 				case '4':
 					resPerson=findPerson(head->next);
 					if (resPerson == NULL)
 						printf("\nOsoba nije nadena u listi\n");
 					else
-						printf("\nOsoba po prezimenu %s je nadena na lokaciji %d\n", resPerson,resPerson->surname);;
+						printf("\nOsoba po prezimenu %s je nadena na adresi %p\n", resPerson,resPerson->surname);;
 
-					break;
+					continue;
 
 				case '5':
 					del(head);
 
-					break;
+					continue;
 
 				case '6':
-					insertAfterPerson(head);
+					insertAfterPerson(head->next);
 
-					break;
+					continue;
 
 				case '7':
 					insertBeforePerson(head);
 
-					break;
+					continue;
 
 				case '8':
 					sortedInput(head);
 
-					break;
+					continue;
 
 				case '9':
 					inputListToFIle(head->next);
 
-					break;
+					continue;
 
 				case 'a':
 					inputListFromFile(head);
 
-					break;
+					continue;
 
 				case '0':
 
 					printf("\nKraj programa!\n");
 
 					break;
-			default:
-				printf("\nKrivi unos!!\n");
-				menu(head);
 
+				default:
+					printf("\nKrivi unos!!\n");
+
+					continue;
 			}
 			
-			getchar();   //doda san ovaj getchar jer kad je  bia Krivi unos uvik bi osta jedan '\n' koji bi zblesia kod (mora bi dva puta upisat 0 da se program zatvori)
-
-			if (pick == '0')
-				break;
-			
+			break;
 		};
 
 
@@ -247,7 +247,7 @@ int del(position P) {
 
 int insertAfterPerson(position P) {
 	position newPerson = NULL;
-	Person personBehind = { {0},{0},0 };
+	Person afterWhichPersonToInsert = { {0},{0},0 };
 
 	newPerson = malloc(sizeof(Person));
 
@@ -257,12 +257,12 @@ int insertAfterPerson(position P) {
 	}
 
 	printf("\nUnesite ime, prezime i godinu rodenja osobe iza koje zelite umetnuti novu osobu: \n");
-	scanf("\n%s %s %d", personBehind.name, personBehind.surname, &personBehind.birthYear);
+	scanf("\n%s %s %d", afterWhichPersonToInsert.name, afterWhichPersonToInsert.surname, &afterWhichPersonToInsert.birthYear);
 
 	printf("\nUnesite ime, prezime i godinu rodenja nove osobe: \n");
 	scanf("\n%s %s %d", newPerson->name, newPerson->surname, &newPerson->birthYear);
 
-	while (P != NULL && strcmp(P->surname, personBehind.surname) != 0 && strcmp(P->name, personBehind.name) != 0 && P->birthYear != personBehind.birthYear) {
+	while (P != NULL && strcmp(P->surname, afterWhichPersonToInsert.surname) != 0 && strcmp(P->name, afterWhichPersonToInsert.name) != 0 && P->birthYear != afterWhichPersonToInsert.birthYear) {
 		P = P->next;
 	}
 
