@@ -19,10 +19,10 @@ typedef struct stackElement {
 }StackElement;
 
 
-int readFromFileAndCalculatePostfix(position head,double* result,char* postfixEq);
-int push(double number, position head);
-int checkStackAndExtractResultUsingOperator(position head, char operator);
-int pop(head);
+int readFromFileAndCalculatePostfix(position top,double* result,char* postfixEq);
+int push(double number, position top);
+int checkStackAndExtractResultUsingOperator(position top, char operator);
+int pop(top);
 
 int main() {
 	StackElement head = { 0,NULL };
@@ -36,7 +36,7 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-int readFromFileAndCalculatePostfix(position head, double* result, char* postfixEq) {
+int readFromFileAndCalculatePostfix(position top, double* result, char* postfixEq) {
 	FILE* fileName = NULL;
 	int numBytes = 0, status = 0;
 	double number = 0;
@@ -58,124 +58,102 @@ int readFromFileAndCalculatePostfix(position head, double* result, char* postfix
 
 		if (status == 1) {
 
-			push(number, head);
+			push(number, top);
 		}
 
 		else {
 
 			sscanf(postfixEq," %c %n", &operator, &numBytes);
 
-			checkStackAndExtractResultUsingOperator(head, operator);
-		
+			checkStackAndExtractResultUsingOperator(top, operator);
+	
 		}
 
 		postfixEq += numBytes;
 	}
 
-	*result = head->next->number;
-	pop(head);
+	*result = pop(top);
 
 	fclose(fileName);
 
 	return EXIT_SUCCESS;
 }
 
-int checkStackAndExtractResultUsingOperator(position head, char operator) {
-	position current = head;
-	double result = 0;
+int checkStackAndExtractResultUsingOperator(position top, char operator) {
+	double operandRes = 0;
 	int counter = 0;
 
 	switch (operator) {
 
 		case '+':
 
-			result = 0;
+			operandRes = 0;
 
 			for (counter = 0; counter < 2; counter++) {
 
-				current = head;
+				operandRes += top->next->number;
 
-				while(current->next != NULL)
-					current = current->next;
-
-				result += current->number;
-
-				pop(head);
+				pop(top);
 			}
 
-			push(result, head);
+			push(operandRes, top);
 
 			break;
 
 		case '-':
 
-			result = 0;
+			operandRes = 0;
 
 			for (counter = 0; counter < 2; counter++) {
 
-				current = head;
-
-				while (current->next != NULL)
-					current = current->next;
-
-				if (result == 0)
-					result = current->number;
+				if (operandRes == 0)
+					operandRes = top->next->number;
 
 				else
-					result = current->number - result;
+					operandRes = top->next->number - operandRes;
 
-				pop(head);
+				pop(top);
 			}
 
-			push(result, head);
+			push(operandRes, top);
 
 			break;
 
 		case '*':
 
-			result = 0;
+			operandRes = 0;
 
-			for (counter = 0; counter < 2; counter++) {
+			for (counter = 0; counter < 2; counter++) {;
 
-				current = head;
-
-				while (current->next != NULL)
-					current = current->next;
-
-				if (result == 0)
-					result = current->number;
+				if (operandRes == 0)
+					operandRes = top->next->number;
 
 				else
-					result *= current->number;
+					operandRes *= top->next->number;
 
-				pop(head);
+				pop(top);
 			}
 
-			push(result, head);
+			push(operandRes, top);
 
 			break;
 
 		case '/':
 
-			result = 0;
+			operandRes = 0;
 
 			for (counter = 0; counter < 2; counter++) {
 
-				current = head;
-
-				while (current->next != NULL)
-					current = current->next;
-
-				if (result == 0)
-					result = current->number;
+				if (operandRes == 0)
+					operandRes = top->next->number;
 
 				else
-					result = current->number / result;
+					operandRes = top->next->number / operandRes;
 
-				pop(head);
+				pop(top);
 			}
 
-			push(result, head);
+			push(operandRes, top);
 
 			break;
 
@@ -189,8 +167,8 @@ int checkStackAndExtractResultUsingOperator(position head, char operator) {
 	return EXIT_SUCCESS;
 }
 
-int push(double number, position head) {
-	position newElement = NULL, current = head;
+int push(double number, position top) {
+	position newElement = NULL;
 
 	newElement = malloc(sizeof(StackElement));
 
@@ -202,28 +180,25 @@ int push(double number, position head) {
 
 	newElement->number = number;
 
-	while (current->next != NULL)
-		current = current->next;
-
-	newElement->next = current->next;
-	current->next = newElement;
+	newElement->next = top->next;
+	top->next = newElement;
 
 
 	return EXIT_SUCCESS;
 }
 
-int pop(head) {
-	position current = head, temp = NULL;
+int pop(position top) {
+	position toDel = NULL;
+	int poppedRes = 0;
 
-	while (current->next->next != NULL)
-		current = current->next;
+	toDel = top->next;
+	top->next = toDel->next;
 
-	temp = current->next;
-	current->next = temp->next;
+	poppedRes = toDel->number;
 
-	free(temp);
+	free(toDel);
 
-	return EXIT_SUCCESS;
+	return poppedRes;
 }
 
 
