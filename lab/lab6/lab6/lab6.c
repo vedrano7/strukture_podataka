@@ -207,8 +207,6 @@ int compareDates(char* date1, char* date2) {
 int mergeReceipts(receiptPosition newReceiptNode, receiptPosition currentReceiptInList) {
 	articlePosition current = &newReceiptNode->articleHead, temp = NULL;
 
-	temp = malloc(sizeof(article));
-
 	while (current->next != NULL) {
 		temp=createAndFillArticleNode(current->next->name, current->next->quantity, current->next->price);
 

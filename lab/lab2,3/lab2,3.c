@@ -32,16 +32,16 @@ typedef struct person {
 Person;
 
 int menu(position head);
-int addPersonToBeg(position P);
-int printList(position P);
-int addPersonToEnd(position P);
-position findPerson(position P);
-int del(position P);
-int insertAfterPerson(position P);
-int insertBeforePerson(position P);
-int sortedInput(position P);
-int inputListToFIle(position P);
-int inputListFromFile(position P);
+int addPersonToBeg(position head);
+int printList(position firstEl);
+int addPersonToEnd(position head);
+position findPerson(position firstEl);
+int del(position head);
+int insertAfterPerson(position firstEl);
+int insertBeforePerson(position head);
+int sortedInput(position head);
+int inputListToFIle(position firstEl);
+int inputListFromFile(position head);
 
 int main() {
 	Person head = { {0},{0},0,NULL};
@@ -136,7 +136,7 @@ int menu(position head) {
 	return 0;
 }
 
-int addPersonToBeg(position P){
+int addPersonToBeg(position head){
 	position newPerson=NULL;
 
 	newPerson =(Person*)malloc(sizeof(Person));
@@ -151,24 +151,25 @@ int addPersonToBeg(position P){
 	printf("\nUnesite ime, prezime i godinu rodenja nove osobe:\n");
 	scanf("\n%s %s %d", newPerson->name, newPerson->surname, &newPerson->birthYear);
 	
-	newPerson->next = P->next;
-	P->next = newPerson;
+	newPerson->next = head->next;
+	head->next = newPerson;
 
 	return 0;
 }
 
-int printList(position P) {
+int printList(position firstEl) {
+	position current = firstEl;
 
 	printf("\n------------\n"); 
 	
-	if (P == NULL)
+	if (current == NULL)
 		printf("Lista je prazna!\n");
 
 	else{
 
-		while (P != NULL) {
-			printf("%s %s %d\n", P->name, P->surname, P->birthYear);
-			P = P->next;
+		while (current != NULL) {
+			printf("%s %s %d\n", current->name, current->surname, current->birthYear);
+			current = current->next;
 		}
 	}
 
@@ -177,9 +178,9 @@ int printList(position P) {
 	return 0;
 }
 
-int addPersonToEnd(position P) {
+int addPersonToEnd(position head) {
 
-	position newPerson=NULL;
+	position newPerson = NULL, current = head;
 
 	newPerson =(Person*)malloc(sizeof(Person));
 
@@ -191,51 +192,51 @@ int addPersonToEnd(position P) {
 	printf("\nUnesite ime, prezime i godinu rodenja nove osobe: \n");
 	scanf("\n%s %s %d", newPerson->name, newPerson->surname, &newPerson->birthYear);
 
-	while (P->next != NULL) {
-		P = P->next;
+	while (current->next != NULL) {
+		current = current->next;
 	}
 
-	newPerson->next = P->next;
-	P->next = newPerson;
+	newPerson->next = current->next;
+	current->next = newPerson;
 
 	return 0;
 }
 
-position findPerson(position P){
-	
+position findPerson(position firstEl){
+	position current = firstEl;
 	char wantedPerson[MAX];
 
 	printf("\nUnesite prezime trazene osobe: \n");
 	scanf("\n%s", wantedPerson);
 
-	while (P != NULL && strcmp(P->surname, wantedPerson)!=0) {
-		P = P->next;
+	while (current != NULL && strcmp(current->surname, wantedPerson)!=0) {
+		current = current->next;
 
 	}
 
-	return P;
-	}
+	return current;
+}
 
-int del(position P) {
+int del(position head) {
 	Person wantedPersonToDel = { {0},{0},0,NULL };
-	position temp=NULL;
+	position temp=NULL,current = head;
 
 	printf("\nUnesite ime, prezime i god rodenja osobe koju zelite izbrisati iz liste:\n");
 	scanf("\n%s %s %d%", wantedPersonToDel.name, wantedPersonToDel.surname, &wantedPersonToDel.birthYear);
 
 
-	while (P->next != NULL && strcmp(P->next->surname, wantedPersonToDel.surname)!=0 && strcmp(P->next->name, wantedPersonToDel.name)!=0 && P->next->birthYear!=wantedPersonToDel.birthYear){
+	while (current->next != NULL && strcmp(current->next->surname, wantedPersonToDel.surname)!=0 && strcmp(current->next->name, wantedPersonToDel.name)!=0 && current->next->birthYear!=wantedPersonToDel.birthYear){
 		
-		P = P->next;
+		current = current->next;
 	}
 
 
-	if (P->next == NULL)
+	if (current->next == NULL)
 		printf("\nTe osoba nema na listi\n");
 
 	else {
-		temp = P->next;
-		P->next = temp->next;
+		temp = current->next;
+		current->next = temp->next;
 		printf("\nOsoba %s %s %d je obrisana!\n", wantedPersonToDel.name, wantedPersonToDel.surname, wantedPersonToDel.birthYear);
 	
 	}
@@ -245,8 +246,8 @@ int del(position P) {
 	return 0;
 }
 
-int insertAfterPerson(position P) {
-	position newPerson = NULL;
+int insertAfterPerson(position firstEl) {
+	position newPerson = NULL,current = firstEl;
 	Person afterWhichPersonToInsert = { {0},{0},0 };
 
 	newPerson = malloc(sizeof(Person));
@@ -262,26 +263,26 @@ int insertAfterPerson(position P) {
 	printf("\nUnesite ime, prezime i godinu rodenja nove osobe: \n");
 	scanf("\n%s %s %d", newPerson->name, newPerson->surname, &newPerson->birthYear);
 
-	while (P != NULL && strcmp(P->surname, afterWhichPersonToInsert.surname) != 0 && strcmp(P->name, afterWhichPersonToInsert.name) != 0 && P->birthYear != afterWhichPersonToInsert.birthYear) {
-		P = P->next;
+	while (current != NULL && strcmp(current->surname, afterWhichPersonToInsert.surname) != 0 && strcmp(current->name, afterWhichPersonToInsert.name) != 0 && current->birthYear != afterWhichPersonToInsert.birthYear) {
+		current = current->next;
 	}
 
-	if (P == NULL) {
+	if (current == NULL) {
 		printf("\nmOsoba iza koje ste htjeli umetnuti novu osobu ne postoji u listi\n");
 		free(newPerson);
 	}
 
 	else {
-		newPerson->next = P->next;
-		P->next = newPerson;
+		newPerson->next = current->next;
+		current->next = newPerson;
 	}
 
 	return 0;
 }
 
-int insertBeforePerson(position P) {
-	position newPerson = NULL;
-	Person persoInFront = { {0},{0},0 };
+int insertBeforePerson(position head) {
+	position newPerson = NULL, current = head;
+	Person personInFront = { {0},{0},0 };
 
 	newPerson = malloc(sizeof(Person));
 
@@ -291,32 +292,32 @@ int insertBeforePerson(position P) {
 	}
 
 	printf("\nUnesite ime, prezime i godinu rodenja osobe ispred koje zelite umetnuti novu osobu: \n");
-	scanf("\n%s %s %d", persoInFront.name, persoInFront.surname, &persoInFront.birthYear);
+	scanf("\n%s %s %d", personInFront.name, personInFront.surname, &personInFront.birthYear);
 
 	printf("\nUnesite ime, prezime i godinu rodenja nove osobe: \n");
 	scanf("\n%s %s %d", newPerson->name, newPerson->surname, &newPerson->birthYear);
 
-	while (P != NULL && strcmp(P->next->surname, persoInFront.surname) != 0 && strcmp(P->next->name, persoInFront.name) != 0 && P->next->birthYear != persoInFront.birthYear) {
-		P = P->next;
+	while (current->next != NULL && strcmp(current->next->surname, personInFront.surname) != 0 && strcmp(current->next->name, personInFront.name) != 0 && current->next->birthYear != personInFront.birthYear) {
+		current = current->next;
 
 	}
 
-	if (P == NULL) {
-		printf("\nmOsoba ispred koje ste htjeli umetnuti novu osobu ne postoji u listi\n");
+	if (current->next == NULL) {
+		printf("\nOsoba ispred koje ste htjeli umetnuti novu osobu ne postoji u listi\n");
 		free(newPerson);
 	}
 	
 	else {
-		newPerson->next = P->next;
-		P->next = newPerson;
+		newPerson->next = current->next;
+		current->next = newPerson;
 
 	}
 
 	return 0;
 }
 
-int sortedInput(position P) {
-	position newPerson = NULL;
+int sortedInput(position head) {
+	position newPerson = NULL, current = head;
 
 	newPerson = malloc(sizeof(Person));
 
@@ -328,18 +329,19 @@ int sortedInput(position P) {
 	printf("\nUnesite ime, prezime i godinu rodenja nove osobe: \n");
 	scanf("\n%s %s %d", newPerson->name, newPerson->surname, &newPerson->birthYear);
 
-	while (P->next!= NULL && strcmp(newPerson->surname, P->next->surname) > 0)
-		P = P->next;
+	while (current->next!= NULL && strcmp(newPerson->surname, current->next->surname) > 0)
+		current = current->next;
 
 
-	newPerson->next = P->next;
-	P->next = newPerson;
+	newPerson->next = current->next;
+	current->next = newPerson;
 
 	return 0;
 }
 
-int inputListToFIle(position P) {
+int inputListToFIle(position firstEl) {
 	FILE* students = NULL;
+	position current = firstEl;
 
 	students = fopen("studenti.txt", "w");
 
@@ -348,9 +350,9 @@ int inputListToFIle(position P) {
 		return -1;
 	}
 
-	while (P != NULL) {
-		fprintf(students, "%s %s %d\n", P->name, P->surname, P->birthYear);
-		P = P->next;
+	while (current != NULL) {
+		fprintf(students, "%s %s %d\n", current->name, current->surname, current->birthYear);
+		current = current->next;
 	}
 
 	fclose(students);
@@ -358,9 +360,9 @@ int inputListToFIle(position P) {
 	return 0;
 }
 
-int inputListFromFile(position P) {
+int inputListFromFile(position head) {
 	FILE* students = NULL;
-	position newPerson=NULL;
+	position newPerson=NULL, current = head;
 
 	students = fopen("studenti.txt", "r");
 
@@ -375,10 +377,10 @@ int inputListFromFile(position P) {
 
 		fscanf(students, "%s %s %d\n", newPerson->name, newPerson->surname, &newPerson->birthYear);
 
-		newPerson->next = P->next;
-		P->next = newPerson;
+		newPerson->next = current->next;
+		current->next = newPerson;
 
-		P = P->next;
+		current = current->next;
 		
 	}
 
