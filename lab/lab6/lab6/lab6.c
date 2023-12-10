@@ -33,6 +33,7 @@ typedef struct _receipt{
 
 }receipt;
 
+
 int readAndCreateReceiptList(receiptPosition receiptHead);
 receiptPosition createAndFillReceiptNode(char* receiptName);
 articlePosition createAndFillArticleNode(char* articleName, int articleQuantity, int articlePrice);
@@ -42,9 +43,6 @@ int compareDates(char* date1, char* date2);
 int mergeReceipts(receiptPosition newReceiptNode,receiptPosition currentReceiptInList);
 int findAndPrintPriceAndQuantityOfArticleInTimeframe(receiptPosition receiptHead, char* wantedArticleName, char* dateFrom, char* dateTo);
 int printPriceAndQuantityOfArticleInTimeFrame(receiptPosition startReceipt, receiptPosition endReceipt,char* wantedArticleName);
-
-int printReceiptList(receiptPosition firstEl);
-int printArticleList(articlePosition head);
 
 
 int main() {
@@ -268,7 +266,7 @@ int printPriceAndQuantityOfArticleInTimeFrame(receiptPosition startReceipt, rece
 			articleCurrent = articleCurrent->next;
 		
 		if (articleCurrent->next != NULL)
-			printf("\nUkupna kolicina artikla je bila %d i kostala je %d eura!\n", articleCurrent->next->quantity, articleCurrent->next->price);
+			printf("\nUkupna kolicina artikla je bila %d komada i kostala je %d eura!\n", articleCurrent->next->quantity, articleCurrent->next->price);
 
 		else
 			printf("\nArtikl nije kupljen u trazenom vremenskom razdoblju!\n");
@@ -293,7 +291,7 @@ int printPriceAndQuantityOfArticleInTimeFrame(receiptPosition startReceipt, rece
 		}
 
 		if (totalQuantity != 0)
-			printf("\nUkupna kolicina artikla je bila %d i kostala je %d eura!\n", totalQuantity, totalPrice);
+			printf("\nUkupna kolicina artikla je bila %d komada i kostala je %d eura!\n", totalQuantity, totalPrice);
 
 
 		else
