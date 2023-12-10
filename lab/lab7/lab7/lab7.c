@@ -58,7 +58,7 @@ int menu(dirPosition rootDir, stackPosition stackTop) {
 		printf("\nMenu:\n");
 		printf("1 - md (Create Directory)\n");
 		printf("2 - cd dir (Change Directory)\n");
-		printf("3 - cd.. (Go Up)\n");				//pomaknuti se za jedan level gore u dubljini stabla (ic u roditeljski direktorij od onog u kojeg se nalazimo)
+		printf("3 - cd.. (Go Up)\n");				//pomaknuti se za jedan level gore u dubljini stabla (ic u roditeljski direktorij od onog u kojem se nalazimo)
 		printf("4 - dir (List Contents)\n");
 		printf("5 - exit\n");
 
