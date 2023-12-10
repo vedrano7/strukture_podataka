@@ -28,7 +28,7 @@ typedef struct LevelStackNode {
 int menu(dirPosition rootDir, stackPosition stackTop);
 dirPosition createSubdir(dirPosition currentDir, char* dirName);
 int printDirContents(dirPosition currentDir);		//ispise ime direktorija u kojem se nalazimo i imena svih njegovih poddirektorija
-dirPosition changeDir(dirPosition currentDir, char* wantedDir);		//pomakne nas u neki poddirektorij direktorija u kojeg se nalazimo
+dirPosition changeDir(dirPosition currentDir, char* wantedDir);		//pomakne nas u neki poddirektorij od direktorija u kojem se nalazimo
 
 
 int push(stackPosition stackHead, dirPosition dirLevel);
