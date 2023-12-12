@@ -46,6 +46,8 @@ int main() {
 
 	menu(rootDir, &stackHead);
 
+	free(rootDir);
+
 	return EXIT_SUCCESS;
 }
 
@@ -94,9 +96,9 @@ int menu(dirPosition rootDir, stackPosition stackTop) {
 					currentDir = result;
 				}
 
-				else
+				else 
 					printf("\nDestination directory not found in current directory!\n");
-
+					
 				continue;
 
 			case '3':
@@ -105,8 +107,11 @@ int menu(dirPosition rootDir, stackPosition stackTop) {
 					printf("\nSuccessfully moved to directory %s\n", currentDir->name);
 				}
 
-				else
+				else {
 					printf("\nAlready in root directory!\n");
+					pop(stackTop);
+					break;
+				}
 
 				continue;
 
@@ -128,6 +133,7 @@ int menu(dirPosition rootDir, stackPosition stackTop) {
 		break;
 	}
 
+	return EXIT_SUCCESS;
 
 }
 
@@ -195,7 +201,8 @@ dirPosition pop(stackPosition stackTop) {
 	stackTop->next = toDel->next;
 	free(toDel);
 
-	dirLevel = stackTop->next->dirLevelEl;
+	if(stackTop->next!=NULL)
+		dirLevel = stackTop->next->dirLevelEl;
 
 	return dirLevel;
 }
