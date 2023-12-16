@@ -37,10 +37,9 @@ dirPosition pop(stackPosition stackTop);
 int main() {
 	dirNode dirHead = { {0},NULL,NULL };
 	levelStackNode stackHead = { NULL,NULL };
-
 	dirPosition rootDir = NULL;
 
-	rootDir=createSubdir(&dirHead, "C:");
+	rootDir=createSubdir(&dirHead, "C:");		//moramo ovo da imamo temeljni level direktorija, ali mogli smo i bez head-a jer u zadatku ne moramo brisat cijelo stablo
 
 	push(&stackHead, rootDir);
 
