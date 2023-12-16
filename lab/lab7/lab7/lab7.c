@@ -182,8 +182,13 @@ dirPosition changeDir(dirPosition currentDir, char* wantedDir) {
 
 int push(stackPosition stackTop, dirPosition dirLevel) {
 	stackPosition newStackNode = NULL;
-
+	
 	newStackNode = malloc(sizeof(levelStackNode));
+
+	if (!newStackNode) {
+		printf("\nUnable to allocate memory for newStackNode!\n");
+		return NULL;
+	}
 
 	newStackNode->dirLevelEl = dirLevel;
 
