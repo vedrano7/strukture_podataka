@@ -87,6 +87,8 @@ int main() {
 
 	randTreeFileInorderPrint(rootRand, RTFile);
 
+	fclose(RTFile);
+	
 	return EXIT_SUCCESS;
 }
 
