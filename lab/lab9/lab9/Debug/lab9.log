@@ -1,0 +1,3 @@
+﻿  lab9.c
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab9\lab9\lab9.c(42,15): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+  lab9.vcxproj -> C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab9\Debug\lab9.exe
