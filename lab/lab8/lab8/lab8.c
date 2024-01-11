@@ -12,6 +12,12 @@ typedef struct TreeNode {
 	position leftChild, rightChild;
 }treeNode;
 
+typedef struct QueueNode*  qPosition;			//čvor za red za levelorder ispis
+typedef struct QueueNode {
+	position treeNode;
+	qPosition nextQNode;
+}queueNode;
+
 
 int menu(position root);
 position find(position root, int wantedEl);
@@ -22,6 +28,7 @@ int inorderPrint(position root);
 int postorderPrint(position root);
 int preorderPrint(position root);
 int levelorderPrint(position root);
+qPosition createQNode(position treeNode);
 
 
 int main() {
@@ -253,25 +260,52 @@ int preorderPrint(position root) {
 }
 
 int levelorderPrint(position root) {
-	position current = NULL, queue[100] = { NULL };		
-	int front = 0, rear = 0;
+	position currentTreeNode = NULL;
+	qPosition temp = NULL, front = NULL, rear = NULL;
 
-	queue[rear] = root;		
+	front = rear =createQNode(root);
+	
+	while (front!=NULL) {
 
-	while (front <= rear) {
+		currentTreeNode = front->treeNode;
 
-		current = queue[front];
+		printf("%d ", currentTreeNode->el);
 
-		printf("%d ", current->el);
+		if (currentTreeNode->leftChild != NULL) {
+			//zapravo enqueue
+			temp = rear;
+			rear = createQNode(currentTreeNode->leftChild);
+			temp->nextQNode = rear;
+		}
 
-		if (current->leftChild != NULL)
-			queue[++rear] = current->leftChild;
-
-		if (current->rightChild != NULL)
-			queue[++rear] = current->rightChild;
-
-		front++;				
+		if (currentTreeNode->rightChild != NULL) {
+			//zapravo enqueue
+			temp = rear;
+			rear = createQNode(currentTreeNode->rightChild);
+			temp->nextQNode = rear;
+		}
+		
+		//zapravo dequeue
+		temp = front;
+		front = front->nextQNode;
+		free(temp);
 	}
 
 	return EXIT_SUCCESS;
+}
+
+qPosition createQNode(position treeNode) {
+	qPosition temp, newNode = NULL;
+
+	newNode = malloc(sizeof(queueNode));
+
+	if (!newNode) {
+		printf("\nNeuspjela alokacija memorije za newNode!\n");
+		return NULL;
+	}
+
+	newNode->treeNode = treeNode;
+	newNode->nextQNode = NULL;
+
+	return newNode;
 }
