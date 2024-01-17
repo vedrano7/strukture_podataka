@@ -1,0 +1,4 @@
+Novi Sad,368967
+Novi Pazar,71497
+Subotica,103985
+Beograd,1374000

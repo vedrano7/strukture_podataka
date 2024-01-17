@@ -1,0 +1,3 @@
+Ljubljana,279631
+Celje,37872
+Maribor,94370
