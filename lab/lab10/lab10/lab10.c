@@ -81,7 +81,7 @@ int problemB();
 int makeCountryTreeAndCityLists(char* filename, positionTreeNodeB rootCountryTree);
 positionTreeNodeB countryTreeSortInsert(positionTreeNodeB root, char* countryName);
 positionTreeNodeB createTreeNodeB(char* countryName);
-positionListNodeB createListNode(int cityPop, char* cityName);
+positionListNodeB createCityListNode(int cityPop, char* cityName);
 int readFromCityFileAndMakeLists(positionTreeNodeB countryNodePosition, char* cityFileName);
 positionListNodeB cityListSortInsert(positionListNodeB head, int cityPop, char* cityName, int mode);
 int inorderPrintCountryTreeAndCityNameList(positionTreeNodeB root);
@@ -365,6 +365,8 @@ int makeCountryTreeAndCityLists(char* filename, positionTreeNodeB rootCountryTre
 		sscanf(buffer, "%s %s", countryName, cityFileName);
 
 		countryNodePosition = countryTreeSortInsert(rootCountryTree, countryName);
+		countryNodePosition->headCitiesSortedName = createCityListNode(0, '\0');
+		countryNodePosition->headCitiesSortedPopulation = createCityListNode(0, '\0');
 		readFromCityFileAndMakeLists(countryNodePosition, cityFileName);
 	}
 
@@ -397,8 +399,8 @@ positionTreeNodeB createTreeNodeB(char* countryName) {
 
 	strcpy(newNode->countryName, countryName);
 
-	newNode->headCitiesSortedName = createListNode(0, NULL);
-	newNode->headCitiesSortedPopulation = createListNode(0, NULL);
+	newNode->headCitiesSortedName = NULL;
+	newNode->headCitiesSortedPopulation = NULL;
 
 	newNode->leftChild = NULL;
 	newNode->rightChild = NULL;
@@ -406,7 +408,7 @@ positionTreeNodeB createTreeNodeB(char* countryName) {
 	return newNode;
 }
 
-positionListNodeB createListNode(int cityPop, char* cityName) {
+positionListNodeB createCityListNode(int cityPop, char* cityName) {
 	positionListNodeB newNode = NULL;
 
 	newNode = malloc(sizeof(listNodeB));
@@ -415,6 +417,8 @@ positionListNodeB createListNode(int cityPop, char* cityName) {
 		printf("\nNeuspjela alokacija memorije za newNode\n");
 		exit(-1);
 	}
+
+	
 
 	strcpy(newNode->cityName, cityName);
 	newNode->cityPopulation = cityPop;
@@ -440,8 +444,8 @@ int readFromCityFileAndMakeLists(positionTreeNodeB countryNodePosition, char* ci
 		fgets(buffer, MAXLINESIZE, cityFile);
 		sscanf(buffer, "%[^,]%*c%d", cityName, &cityPopulation);	//za ime grada uzima sve do zareza onda uzima i odma odbacuje zarez i zadnje uzima broj za populaciju grada
 
-		countryNodePosition->headCitiesSortedName = cityListSortInsert(countryNodePosition->headCitiesSortedName, cityPopulation, cityName, 1);
-		countryNodePosition->headCitiesSortedPopulation = cityListSortInsert(countryNodePosition->headCitiesSortedName, cityPopulation, cityName, 2);
+		countryNodePosition->headCitiesSortedName->next = cityListSortInsert(countryNodePosition->headCitiesSortedName, cityPopulation, cityName, 1);
+		countryNodePosition->headCitiesSortedPopulation->next= cityListSortInsert(countryNodePosition->headCitiesSortedPopulation, cityPopulation, cityName, 2);
 	}
 
 
@@ -451,7 +455,7 @@ int readFromCityFileAndMakeLists(positionTreeNodeB countryNodePosition, char* ci
 positionListNodeB cityListSortInsert(positionListNodeB head, int cityPop, char* cityName, int mode) {
 	positionListNodeB newNode = NULL, current = head;
 
-	newNode = createListNode(cityPop, cityName);
+	newNode = createCityListNode(cityPop, cityName);
 
 	if (mode == 1) {
 
@@ -514,7 +518,7 @@ int printCitiesWithGreaterPopulationB(positionTreeNodeB rootCountry, int inputPo
 	if (rootCountry != NULL) {
 		printCitiesWithGreaterPopulationB(rootCountry->leftChild, inputPopNum);
 		greaterPopCity=findGreaterPopCityB(rootCountry->headCitiesSortedPopulation->next, inputPopNum);
-		printCitiesB(rootCountry->headCitiesSortedPopulation->next,greaterPopCity);
+		printCitiesB(greaterPopCity,rootCountry->headCitiesSortedPopulation->next);
 		printCitiesWithGreaterPopulationB(rootCountry->rightChild, inputPopNum);
 	}
 
