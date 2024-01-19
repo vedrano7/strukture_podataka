@@ -1,5 +1,4 @@
 ﻿  lab10.c
-C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab10\lab10\lab10.c(318,14): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
-C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab10\lab10\lab10.c(363,22): warning C4047: 'return': 'positionTreeNodeB' differs in levels of indirection from 'int'
-C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab10\lab10\lab10.c(531,40): warning C4133: 'function': incompatible types - from 'char [50]' to 'positionTreeNodeB'
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab10\lab10\lab10.c(326,14): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab10\lab10\lab10.c(374,22): warning C4047: 'return': 'positionTreeNodeB' differs in levels of indirection from 'int'
   lab10.vcxproj -> C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab10\Debug\lab10.exe

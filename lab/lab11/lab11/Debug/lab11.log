@@ -1,0 +1,7 @@
+﻿  lab11.c
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab11\lab11\lab11.c(66,52): warning C4133: 'function': incompatible types - from 'char [11]' to 'FILE *'
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab11\lab11\lab11.c(120,32): warning C4133: 'function': incompatible types - from 'FILE *' to 'const char *'
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab11\lab11\lab11.c(159,8): warning C4013: 'strcpy' undefined; assuming extern returning int
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab11\lab11\lab11.c(162,40): warning C4013: 'strcmp' undefined; assuming extern returning int
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab11\lab11\lab11.c(305,14): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+  lab11.vcxproj -> C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\lab11\Debug\lab11.exe

@@ -73,7 +73,7 @@ int readFromCityFileAndMakeTree(positionListNodeA countryNodePosition,char* city
 positionTreeNodeA cityTreeSortInsert(positionTreeNodeA root, int cityPop, char* cityName);
 positionTreeNodeA createTreeNodeA(char* cityName, int cityPop);
 int inorderPrintTree(positionTreeNodeA root);
-int printCitiesWithGreaterPopulationA(positionListNodeA headCountryList,int inputPopNum);
+int printCitiesWithGreaterPopulationA(positionListNodeA headCountryList,char* wantedCountryName,int inputPopNum);
 positionTreeNodeA findGreaterPopCityA(positionTreeNodeA rootCitiesSortedPopulation, int inputPopNum);
 int printCitiesA(positionTreeNodeA root, int inputPopNum);
 
@@ -91,9 +91,9 @@ int cityListSortInsert(positionListNodeB head, int cityPop, char* cityName);
 positionListNodeB createCityListNode(int cityPop, char* cityName);
 int inorderPrintCountryTreeAndCityLists(positionTreeNodeB root);
 int printCityList(positionListNodeB firstEl);
-int printCitiesWithGreaterPopulationB(positionTreeNodeB rootCountry, int inputPopNum);
+int printCitiesWithGreaterPopulationB(positionTreeNodeB rootCountry,char* wantedCountryName, int inputPopNum);
 positionListNodeB findGreaterPopCityB(positionListNodeB firstEl, int inputPopNum);
-int printCitiesB(positionTreeNodeB countryNode, positionListNodeB firstGreaterPopCity, positionListNodeB firstEl);
+int printCitiesB(char* countryName, positionListNodeB firstGreaterPopCity, positionListNodeB firstEl);
 
 //main
 int main() {
@@ -115,15 +115,16 @@ int main() {
 int problemA() {
 	listNodeA headCountryList = { {0}, NULL,NULL };
 	int inputPopNum = 0;
+	char wantedCountryName[MAXNAMESIZE] = { '\0' };
 
 	makeCountryListAndCityTree("drzave.txt", &headCountryList);
 	
 	printCountryListAndCityTree(headCountryList.next);
 
-	printf("\nUpisite odredeni broj stanovnika i mi cemo Vam ispisati imena svih gradova ovdje upisano s vecim!\n");
-	scanf("%d", &inputPopNum);
+	printf("\nUpisite odredenu drzavu i broj stanovnika i mi cemo Vam ispisati imena svih gradova te drzave ovdje upisano s vecim brojem stanovnika!\n");
+	scanf("%s %d", wantedCountryName, &inputPopNum);
 
-	printCitiesWithGreaterPopulationA(headCountryList.next, inputPopNum);
+	printCitiesWithGreaterPopulationA(headCountryList.next, wantedCountryName, inputPopNum);
 
 	return EXIT_SUCCESS;
 }
@@ -148,6 +149,8 @@ int makeCountryListAndCityTree(char* filename, positionListNodeA headCountryList
 		countryNodePosition=countryListSortInsert(headCountryList, countryName);
 		readFromCityFileAndMakeTree(countryNodePosition,cityFileName);
 	}
+
+	fclose(countriesFile);
 
 	return EXIT_SUCCESS;
 }
@@ -176,7 +179,7 @@ positionListNodeA countryListSortInsert(positionListNodeA head, char* countryNam
 
 int readFromCityFileAndMakeTree(positionListNodeA countryNodePosition,char* cityFileName) {
 	FILE* cityFile = NULL;
-	char buffer[MAXNAMESIZE] = { 0 }, cityName[MAXNAMESIZE] = { 0 };
+	char buffer[MAXNAMESIZE] = { '\0' }, cityName[MAXNAMESIZE] = { '\0' };
 	int cityPopulation = 0;
 
 	cityFile = fopen(cityFileName, "r");
@@ -194,6 +197,7 @@ int readFromCityFileAndMakeTree(positionListNodeA countryNodePosition,char* city
 		countryNodePosition->rootCities = cityTreeSortInsert(countryNodePosition->rootCities, cityPopulation, cityName);
 	}
 	
+	fclose(cityFile);
 
 	return EXIT_SUCCESS;
 }
@@ -209,7 +213,7 @@ positionTreeNodeA cityTreeSortInsert(positionTreeNodeA root,int cityPop,char* ci
 	else if (cityPop > root->cityPopulation)
 		root->rightChild = cityTreeSortInsert(root->rightChild, cityPop, cityName);
 
-	else {		//u slucaju da u fajlu imamo dva grada istih populacija onda ih sortiramo po imenu
+	else {		//u slucaju da u fajlu imamo dva grada istih populacija onda ih sortiramo po imenu (to je zadano u tekstu zad: "sortirano po broju stanovnika, zatim po nazivu grada")
 
 		if (strcmp(cityName, root->cityName) < 0)
 		root->leftChild = cityTreeSortInsert(root->leftChild, cityPop, cityName);
@@ -275,24 +279,28 @@ int inorderPrintTree(positionTreeNodeA root) {
 	return EXIT_SUCCESS;
 }
 
-int printCitiesWithGreaterPopulationA(positionListNodeA firstCountryInList,int inputPopNum) {
+int printCitiesWithGreaterPopulationA(positionListNodeA firstCountryInList,char* wantedCountryName,int inputPopNum) {
 	positionTreeNodeA greaterPopCity = NULL;
 	positionListNodeA current = firstCountryInList;
 
 	while (current != NULL) {
-		greaterPopCity = NULL;
 
-		greaterPopCity = findGreaterPopCityA(current->rootCities, inputPopNum);
+		if (strcmp(current->countryName, wantedCountryName)==0) {
+			greaterPopCity = NULL;
 
-		if (greaterPopCity == NULL)
-			printf("\nNema gradova s vecim brojem stanovnika upisano u fajl '%s'!\n", current->countryName);
+			greaterPopCity = findGreaterPopCityA(current->rootCities, inputPopNum);
 
-		else {
+			if (greaterPopCity == NULL)
+				printf("\nNema gradova s vecim brojem stanovnika upisano u fajl '%s'!\n", current->countryName);
 
-			printf("\nGradovi s vecim brojem gradana upisani u fajl '%s' su: ", current->countryName);
-			printCitiesA(greaterPopCity, inputPopNum);
+			else {
 
-			printf("\n");
+				printf("\nGradovi s vecim brojem gradana upisani u fajl '%s' su: ", current->countryName);
+				printCitiesA(greaterPopCity, inputPopNum);
+
+				printf("\n");
+			}
+
 		}
 
 		current = current->next;
@@ -334,6 +342,7 @@ int printCitiesA(positionTreeNodeA root, int inputPopNum) {
 int problemB() {
 	positionTreeNodeB rootCountryTree = NULL;
 	int inputPopNum = 0;
+	char wantedCountryName[MAXNAMESIZE] = { '\0' };
 
 	rootCountryTree = makeCountryTreeAndCityList("drzave.txt", rootCountryTree);
 
@@ -343,10 +352,12 @@ int problemB() {
 
 	printf("---------\n");
 
-	printf("\nUpisite odredeni broj stanovnika i mi cemo Vam ispisati imena svih gradova ovdje upisano s vecim!\n");
-	scanf("%d", &inputPopNum);
+	printf("\nUpisite odredenu drzavu i broj stanovnika i mi cemo Vam ispisati imena svih gradova te drzave ovdje upisano s vecim brojem stanovnika!\n");
+	scanf("%s %d", wantedCountryName, &inputPopNum);
 
-	printCitiesWithGreaterPopulationB(rootCountryTree, inputPopNum);
+	printCitiesWithGreaterPopulationB(rootCountryTree, wantedCountryName, inputPopNum);
+
+	free(rootCountryTree);
 
 	return EXIT_SUCCESS;
 }
@@ -370,6 +381,8 @@ positionTreeNodeB makeCountryTreeAndCityList(char* filename, positionTreeNodeB r
 		rootCountryTree = countryTreeSortInsert(rootCountryTree, countryName);
 		readFromCityFileAndMakeLists(rootCountryTree, countryName, cityFileName);
 	}
+
+	fclose(countriesFile);
 
 	return rootCountryTree;
 }
@@ -411,7 +424,7 @@ positionTreeNodeB createTreeNodeB(char* countryName) {
 
 int readFromCityFileAndMakeLists(positionTreeNodeB rootCountryTree, char* countryName, char* cityFileName) {
 	FILE* cityFile = NULL;
-	char buffer[MAXNAMESIZE] = { 0 }, cityName[MAXNAMESIZE] = { 0 };
+	char buffer[MAXNAMESIZE] = { '\0' }, cityName[MAXNAMESIZE] = { '\0' };
 	int cityPopulation = 0;
 	positionTreeNodeB countryNode = NULL;
 
@@ -432,6 +445,8 @@ int readFromCityFileAndMakeLists(positionTreeNodeB rootCountryTree, char* countr
 		cityListSortInsert(countryNode->headCities, cityPopulation, cityName);
 
 	}
+
+	fclose(cityFile);
 
 	return EXIT_SUCCESS;
 }
@@ -522,14 +537,22 @@ int printCityList(positionListNodeB firstEl) {
 	return 0;
 }
 
-int printCitiesWithGreaterPopulationB(positionTreeNodeB rootCountry, int inputPopNum) {
+int printCitiesWithGreaterPopulationB(positionTreeNodeB rootCountry,char* wantedCountryName, int inputPopNum) {
 	positionListNodeB greaterPopCity = NULL;
 
 	if (rootCountry != NULL) {
-		printCitiesWithGreaterPopulationB(rootCountry->leftChild, inputPopNum);
-		greaterPopCity = findGreaterPopCityB(rootCountry->headCities->next, inputPopNum);
-		printCitiesB(rootCountry->countryName, greaterPopCity, rootCountry->headCities->next);
-		printCitiesWithGreaterPopulationB(rootCountry->rightChild, inputPopNum);
+
+		if (strcmp(rootCountry->countryName, wantedCountryName) == 0) {
+			greaterPopCity = findGreaterPopCityB(rootCountry->headCities->next, inputPopNum);
+			printCitiesB(wantedCountryName, greaterPopCity, rootCountry->headCities->next);
+		}
+
+		else if(strcmp(wantedCountryName,rootCountry->countryName)<0)
+			printCitiesWithGreaterPopulationB(rootCountry->leftChild, wantedCountryName, inputPopNum);
+
+		else
+			printCitiesWithGreaterPopulationB(rootCountry->rightChild, wantedCountryName, inputPopNum);
+
 	}
 
 	return EXIT_SUCCESS;
@@ -544,15 +567,15 @@ positionListNodeB findGreaterPopCityB(positionListNodeB firstEl, int inputPopNum
 	return current;
 }
 
-int printCitiesB(positionTreeNodeB countryNode, positionListNodeB firstGreaterPopCity, positionListNodeB firstEl) {
+int printCitiesB(char* countryName, positionListNodeB firstGreaterPopCity, positionListNodeB firstEl) {
 	positionListNodeB current = firstGreaterPopCity;
 
 	if (current == NULL)
-		printf("\nNema gradova s vecim brojem stanovnika upisano u fajl '%s'!\n", countryNode->countryName);
+		printf("\nNema gradova s vecim brojem stanovnika upisano u fajl '%s'!\n", countryName);
 
 	else {
 
-		printf("\nGradovi s vecim brojem gradana upisani u fajl '%s' su: ", countryNode->countryName);
+		printf("\nGradovi s vecim brojem gradana upisani u fajl '%s' su: ", countryName);
 
 		while (current != NULL) {
 
