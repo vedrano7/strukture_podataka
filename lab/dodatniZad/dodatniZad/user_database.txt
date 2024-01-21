@@ -1,0 +1,4 @@
+Ante Antic,3 Prokleta avlija,1 Preobrazaj,2
+Ivo Ivic,4 Preobrazaj,1 Stranac,3
+Mate Matic,5 Stranac,5
+Sime Simic,2 Prokleta avlija,2

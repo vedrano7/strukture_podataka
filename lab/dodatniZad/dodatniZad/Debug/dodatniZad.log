@@ -1,0 +1,4 @@
+﻿  dodatniZad.c
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\dodatniZad\dodatniZad\dodatniZad.c(349,28): warning C4013: 'saveCurrentLibraryStatus' undefined; assuming extern returning int
+C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\dodatniZad\dodatniZad\dodatniZad.c(531,10): warning C4129: 'D': unrecognized character escape sequence
+  dodatniZad.vcxproj -> C:\Users\Vedran\Desktop\strukture_podataka LAB git repo\strukture_podataka\lab\dodatniZad\Debug\dodatniZad.exe

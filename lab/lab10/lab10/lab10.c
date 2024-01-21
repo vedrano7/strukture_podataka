@@ -18,7 +18,7 @@ tastaturi.*/
 #include<stdlib.h>
 #include <string.h>
 #define MAXLINESIZE (100)
-#define MAXNAMESIZE (50)
+#define MAXNAMESIZE (1024)
 
 //a)
 
@@ -131,12 +131,11 @@ int problemA() {
 
 int makeCountryListAndCityTree(char* filename, positionListNodeA headCountryList){
 	FILE* countriesFile = NULL;
-	char buffer[MAXNAMESIZE] = { 0 }, countryName[MAXNAMESIZE] = { 0 }, cityFileName[MAXNAMESIZE] = { 0 };
+	char buffer[MAXLINESIZE] = { 0 }, countryName[MAXNAMESIZE] = { 0 }, cityFileName[MAXNAMESIZE] = { 0 };
 	positionListNodeA countryNodePosition = NULL; 
 	
 	countriesFile = fopen(filename, "r");
 	
-
 	if (!countriesFile) {
 		printf("\nUnable to open file countriesFile!\n");
 		return EXIT_FAILURE;
@@ -364,7 +363,7 @@ int problemB() {
 
 positionTreeNodeB makeCountryTreeAndCityList(char* filename, positionTreeNodeB rootCountryTree) {
 	FILE* countriesFile = NULL;
-	char buffer[MAXNAMESIZE] = { 0 }, countryName[MAXNAMESIZE] = { 0 }, cityFileName[MAXNAMESIZE] = { 0 };
+	char buffer[MAXLINESIZE] = { 0 }, countryName[MAXNAMESIZE] = { 0 }, cityFileName[MAXNAMESIZE] = { 0 };
 
 
 	countriesFile = fopen(filename, "r");

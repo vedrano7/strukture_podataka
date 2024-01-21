@@ -10,7 +10,7 @@ gradova sortirano po broju stanovnika, zatim po nazivu grada. */
 #include <stdio.h>
 #include <stdlib.h>
 #define HASHTABSIZE 11
-#define MAXLINESIZE (100)
+#define MAXLINESIZE (1024)
 #define MAXNAMESIZE (50)
 
 typedef struct CityTreeNode* positionCityTreeNode;
