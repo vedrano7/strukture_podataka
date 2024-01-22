@@ -481,7 +481,13 @@ int printBooksOfParticularYear(bookPosition firstBook, int wantedYear) {
 	while (current != NULL) {
 
 		if (current->publicationYear == wantedYear) {
-			printf("\n%s - dostupno %d primerka/eka\n", current->bookTitle, current->numOfAvailableCopies);
+
+			if(current->numOfAvailableCopies==1)
+				printf("\n%s - dostupan %d primjerak\n", current->bookTitle, current->numOfAvailableCopies);
+
+			else
+				printf("\n%s - dostupno %d primjerka/primjeraka\n", current->bookTitle, current->numOfAvailableCopies);
+
 			counter++;
 		}
 
@@ -501,7 +507,13 @@ int printBooksOfParticularAuthor(bookPosition firstBook, char* wantedAuthor) {
 	while (current != NULL) {
 
 		if (strcmp(current->authorName,wantedAuthor)==0) {
-			printf("\n%s - dostupno %d kopija/e\n", current->bookTitle, current->numOfAvailableCopies);
+
+			if (current->numOfAvailableCopies == 1)
+				printf("\n%s - dostupan %d primjerak\n", current->bookTitle, current->numOfAvailableCopies);
+
+			else
+				printf("\n%s - dostupno %d primjerka/primjeraka\n", current->bookTitle, current->numOfAvailableCopies);
+
 			counter++;
 		}
 
@@ -680,11 +692,9 @@ int returnBook(bookPosition headBookList, userPosition headUserList) {
 
 		wantedBookNode = findBookNode(headBookList->next, bookTitle);
 
-
-		borrowedBook = NULL;
-		counter = 0;
-
 		wantedUserNode->totalNumOfBorrowedBooks -= numOfCopiesToReturn;
+
+		counter = 0;
 
 		for (i = 0; i < MAX_NO_BORROWED_BOOKS; i++) {
 
@@ -700,16 +710,22 @@ int returnBook(bookPosition headBookList, userPosition headUserList) {
 					delUserThatBorrowedBookFromBookNode(wantedBookNode, userName);
 				}
 
+				counter++;
 				break;
 			}
 		}
 
 
-		if (numOfCopiesToReturn == 1)
-			printf("\nUspjesno vracen %d primjerak knjige %s!\n", numOfCopiesToReturn, bookTitle);
-		else
-			printf("\nUspjesno vraceno %d primjerka/primjeraka knjige %s!\n", numOfCopiesToReturn, bookTitle);
+		if (counter) {
 
+			if (numOfCopiesToReturn == 1)
+				printf("\nUspjesno vracen %d primjerak knjige %s!\n", numOfCopiesToReturn, bookTitle);
+			else
+				printf("\nUspjesno vraceno %d primjerka/primjeraka knjige %s!\n", numOfCopiesToReturn, bookTitle);
+		}
+
+		else
+			printf("\nKorisnik trenutno nema posuden primjerak trazene knjige!\n");
 
 		printf("\nUkoliko zelite vratiti neku drugu knjigu upisite 'y', a ako ne upisite 'n': ");
 		scanf(" %c", &pick);
