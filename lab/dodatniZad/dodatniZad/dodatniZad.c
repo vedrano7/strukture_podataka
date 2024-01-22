@@ -434,7 +434,7 @@ int printUsersAlphabetically(userPosition firstUser) {
 
 			if (current->totalNumOfBorrowedBooks != 0) {
 
-				printf("	%d knjiga/e posudene trenutno ->", current->totalNumOfBorrowedBooks);
+				printf("	%d knjiga/e posudena/e trenutno ->", current->totalNumOfBorrowedBooks);
 
 				for (i = 0; i < MAX_NO_BORROWED_BOOKS; i++) {
 
